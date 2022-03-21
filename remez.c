@@ -359,7 +359,11 @@ int Search(int r, int Ext[],
       if (((E[i]>=E[i-1]) && (E[i]>E[i+1]) && (E[i]>0.0)) ||
           ((E[i]<=E[i-1]) && (E[i]<E[i+1]) && (E[i]<0.0))) {
     // PAK: we sometimes get too many extremal frequencies
-    if (k >= 2*r) return -3;
+    if (k >= 2*r) 
+    {
+      free(foundExt);
+      return -3;
+    }
     foundExt[k++] = i;
       }
    }
@@ -370,13 +374,20 @@ int Search(int r, int Ext[],
    j = gridsize-1;
    if (((E[j]>0.0) && (E[j]>E[j-1])) ||
        ((E[j]<0.0) && (E[j]<E[j-1]))) {
-     if (k >= 2*r) return -3;
+     if (k >= 2*r)
+     {
+       free(foundExt);
+       return -3;
+     }
      foundExt[k++] = j;
    }
 
    // PAK: we sometimes get not enough extremal frequencies
-   if (k < r+1) return -2;
-
+   if (k < r+1)
+   {
+     free(foundExt);
+     return -2;
+   }
 
 /*
  * Remove extra extremals
