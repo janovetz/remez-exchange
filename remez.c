@@ -15,12 +15,15 @@
  *  There appear to be some problems with the routine Search. See comments
  *  therein [search for PAK:].  I haven't looked closely at the rest
  *  of the code---it may also have some problems.
+ *  Aug 2026 - Paul Taylor (paul.taylor@nih.gov)
+ *      Change: remove need for R.h dependency, by updating one error-
+ *      printing statement.
  *************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <R.h>
+//#include <R.h>
 
 #define CONST const
 #define BANDPASS       1
@@ -693,7 +696,8 @@ void remez(double h[], int *numtaps,
       CalcParms(r, Ext, Grid, D, W, ad, x, y);
       CalcError(r, ad, x, y, gridsize, Grid, D, W, E);
       int err = Search(r, Ext, gridsize, E);
-      if (err) error("error, %i, %i", err, gridsize);
+      //if (err) error("error, %i, %i", err, gridsize);
+      if (err) fprintf(stderr, "\nerror, %i, %i\n", err, gridsize);
       //      for(i=0; i <= r; i++) assert(Ext[i]<gridsize);
       if (isDone(r, Ext, E))
          break;
