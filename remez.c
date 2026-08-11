@@ -23,7 +23,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-//#include <R.h>
 
 #define CONST const
 #define BANDPASS       1
