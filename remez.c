@@ -15,26 +15,18 @@
  *  There appear to be some problems with the routine Search. See comments
  *  therein [search for PAK:].  I haven't looked closely at the rest
  *  of the code---it may also have some problems.
+ *  Aug 2026 - Paul Taylor (paul.taylor@nih.gov)
+ *      Change: remove need for R.h dependency, by updating one error-
+ *      printing statement.
+ *      Change2: make *.h of definitions and prototypes; and in main C 
+ *      progs, now do: #include "remez.h"
+ *      Change3: remove "#define CONST const", which was never used
  *************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <R.h>
-
-#define CONST const
-#define BANDPASS       1
-#define DIFFERENTIATOR 2
-#define HILBERT        3
-
-#define NEGATIVE       0
-#define POSITIVE       1
-
-#define Pi             3.1415926535897932
-#define Pi2            6.2831853071795865
-
-#define GRIDDENSITY    16
-#define MAXITERATIONS  40
+#include "remez.h"
 
 /*******************
  * CreateDenseGrid
@@ -272,7 +264,7 @@ double ComputeA(double freq, int r, double ad[], double x[], double y[])
  * int gridsize  - Number of elements in the dense frequency grid
  * double Grid[] - Frequencies on the dense grid [gridsize]
  * double D[]    - Desired response on the dense grid [gridsize]
- * double W[]    - Weight function on the desnse grid [gridsize]
+ * double W[]    - Weight function on the dense grid [gridsize]
  *
  * OUTPUT:
  * -------
@@ -530,7 +522,7 @@ void FreqSample(int N, double A[], double h[], int symm)
  *
  * INPUT:
  * ------
- * int    r     - 1/2 the number of filter coeffiecients
+ * int    r     - 1/2 the number of filter coefficients
  * int    Ext[] - Indexes to extremal frequencies [r+1]
  * double E[]   - Error function on the dense grid [gridsize]
  *
@@ -693,7 +685,8 @@ void remez(double h[], int *numtaps,
       CalcParms(r, Ext, Grid, D, W, ad, x, y);
       CalcError(r, ad, x, y, gridsize, Grid, D, W, E);
       int err = Search(r, Ext, gridsize, E);
-      if (err) error("error, %i, %i", err, gridsize);
+      //if (err) error("error, %i, %i", err, gridsize);
+      if (err) fprintf(stderr, "\nerror, %i, %i\n", err, gridsize);
       //      for(i=0; i <= r; i++) assert(Ext[i]<gridsize);
       if (isDone(r, Ext, E))
          break;
