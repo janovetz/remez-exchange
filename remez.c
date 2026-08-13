@@ -18,25 +18,15 @@
  *  Aug 2026 - Paul Taylor (paul.taylor@nih.gov)
  *      Change: remove need for R.h dependency, by updating one error-
  *      printing statement.
+ *      Change2: make *.h of definitions and prototypes; and in main C 
+ *      progs, now do: #include "remez.h"
+ *      Change3: remove "#define CONST const", which was never used
  *************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-#define CONST const
-#define BANDPASS       1
-#define DIFFERENTIATOR 2
-#define HILBERT        3
-
-#define NEGATIVE       0
-#define POSITIVE       1
-
-#define Pi             3.1415926535897932
-#define Pi2            6.2831853071795865
-
-#define GRIDDENSITY    16
-#define MAXITERATIONS  40
+#include "remez.h"
 
 /*******************
  * CreateDenseGrid
